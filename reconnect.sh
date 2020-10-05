@@ -17,5 +17,5 @@ else
         #  /sbin/ip route add default via $router dev wlan0
         #  /bin/mount -a
         sh /home/pi/random-mac-wlan1.sh
-        curl --header 'Content-Type: application/json' --request 'POST' --data 
+        curl --header 'Content-Type: application/json' --request 'POST' --data '{"chat_id":"**UserID**","text":"wlan1 reconnected"}' "https://api.telegram.org/bot**api**/sendMessage"
 fi
