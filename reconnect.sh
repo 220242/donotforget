@@ -17,5 +17,5 @@ else
         #  /sbin/ip route add default via $router dev wlan0
         #  /bin/mount -a
         sh /home/pi/random-mac-wlan1.sh
-        curl --header 'Content-Type: application/json' --request 'POST' --data '{"chat_id":"594415350","text":"wlan1 re$  echo "wlan1 reconnected at `date`"
+        curl --header 'Content-Type: application/json' --request 'POST' --data 
 fi
