@@ -16,6 +16,8 @@ else
         #  /sbin/ifup --force wlan1
         #  /sbin/ip route add default via $router dev wlan0
         #  /bin/mount -a
-        sh /home/pi/random-mac-wlan1.sh
+        sudo ifconfig wlan1 down
+        sudo macchanger -r wlan1
+        sudo ifconfig wlan1 up
         curl --header 'Content-Type: application/json' --request 'POST' --data '{"chat_id":"**UserID**","text":"wlan1 reconnected"}' "https://api.telegram.org/bot**api**/sendMessage"
 fi
