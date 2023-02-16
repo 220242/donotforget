@@ -48,7 +48,9 @@ while True:
     qualityoutput = "LQ:" + quality.stdout.strip() + " SL:" + signal.stdout.strip() + "dBm"
     frequency = subprocess.run(["iwconfig wlan0 | awk '/Frequency/ {print $2}' | cut -d: -f2"], shell=True, capture_output=True, text=True)
     frequencyoutput = frequency.stdout.strip() + "GHz"
-
+    temp = subprocess.run(['echo $(($(cat /sys/class/thermal/thermal_zone0/temp)/1000))"°C"'], shell=True, capture_output=True, text=True)
+    tempoutput = temp.stdout.strip()
+    
     # Calculate center positions for each line of text
     text_width, text_height = font.getsize(hostname)
     x = (display.width - text_width) / 2
@@ -60,9 +62,10 @@ while True:
     draw.text((5, 10), wifi_network, font=font, fill=text_color)
     draw.text((80, 10), frequencyoutput, font=font, fill=text_color)
     draw.text((5, 20), ip_address, font=font, fill=text_color)
-    draw.text((15, 30), qualityoutput, font=font, fill=text_color)
+    draw.text((5, 30), qualityoutput, font=font, fill=text_color)
     draw.text((5, 115), uptime, font=font, fill=text_color)
-    draw.text((80, 0), bitrateoutput, font=font, fill=text_color)
+    draw.text((80, 20), bitrateoutput, font=font, fill=text_color)
+    draw.text((80, 0), tempoutput, font=font, fill=text_color)
 
     # Display the image on the screen
     display.image(image)
