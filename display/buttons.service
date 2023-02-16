@@ -1,6 +1,6 @@
 [Unit]
 Description=Buttons Service
-After=multi-user.target
+After=display.service
 
 [Service]
 Type=idle
