@@ -1,0 +1,12 @@
+[Unit]
+Description=Display Service
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/python3 /home/pi/display/display3.py
+User=pi
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
