@@ -41,12 +41,13 @@ while True:
     wifi_network = os.popen("iwgetid -r wlan0").read().strip()
     ip_address = os.popen("hostname -I").read().strip()
     uptime = os.popen("uptime -p").read().strip()
-    bitrate = subprocess.run(['/home/pi/display/bitrate.sh'], capture_output=True, text=True)
-    bitrateoutput = bitrate.stdout.strip()
-    quality = subprocess.run(['/home/pi/display/quality.sh'], capture_output=True, text=True)
-    qualityoutput = quality.stdout.strip()
-    frequency = subprocess.run(['/home/pi/display/frequency.sh'], capture_output=True, text=True)
-    frequencyoutput = frequency.stdout.strip()
+    bitrate = subprocess.run(["iwconfig wlan0 | awk -F= '/Bit Rate/ {print $2}' | awk -F/ '{print $1}'"], shell=True, capture_output=True, text=True)
+    bitrateoutput = bitrate.stdout.strip() + "/s"
+    quality = subprocess.run(["iwconfig wlan0 | awk -F= '/Signal level/ {print $2}' | awk '{print $1}'"], shell=True, capture_output=True, text=True)
+    signal = subprocess.run(["iwconfig wlan0 | awk '/Signal level/ {gsub(\"level=\",\"\",$4); print $4}'"], shell=True, capture_output=True, text=True)
+    qualityoutput = "LQ:" + quality.stdout.strip() + " SL:" + signal.stdout.strip() + "dBm"
+    frequency = subprocess.run(["iwconfig wlan0 | awk '/Frequency/ {print $2}' | cut -d: -f2"], shell=True, capture_output=True, text=True)
+    frequencyoutput = frequency.stdout.strip() + "GHz"
 
     # Calculate center positions for each line of text
     text_width, text_height = font.getsize(hostname)
@@ -68,3 +69,4 @@ while True:
 
     # Wait for 5 seconds before updating the image again
     time.sleep(1)
+    
