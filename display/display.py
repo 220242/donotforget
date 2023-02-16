@@ -1,3 +1,4 @@
+#Waveshare 1.44inch LCD HAT 128x128
 import time
 import os
 import board
